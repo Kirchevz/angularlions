@@ -2,19 +2,20 @@
     <mat-grid-tile colspan="1" rowspan="5"></mat-grid-tile>
     <mat-grid-tile colspan="2" rowspan="1"></mat-grid-tile>
     <mat-grid-tile colspan="1" rowspan="5"></mat-grid-tile>
-    <mat-grid-tile colspan="2" rowspan="3">
+    <mat-grid-tile colspan="2" rowspan="5">
       <mat-card class="mat-typography login">
         <h1>Login</h1>
         <form (ngSubmit)="onLogin()">
           <mat-form-field class="full-width">
             <input matInput placeholder="Username" name="username" [(ngModel)]="username">
           </mat-form-field>
+          <br>
           <mat-form-field>
             <input matInput placeholder ="Password" name="password" [(ngModel)]="password">
           </mat-form-field>
           <br>
-          <button type="submit" mat-raised-button color="primary">Login
-            <mat-spinner color="accent" mode="indeterminate" ></mat-spinner>
+          <button type="submit" mat-raised-button color="primary">
+            Login
           </button>
         </form>
       </mat-card>

@@ -3,29 +3,14 @@
     text-align: center;
 }
 
-.mat-spinner {
-    width: 20px !important;
-    height: 20px !important;
-    display: inline-block;
-    margin-left: 10px;
-}
-
-.mat-spinner svg{
-    width: 20px !important;
-    height: 20px !important;
-}
 .login {
     text-align: center;
 }
  
-.mat-spinner {
-    width: 20px !important;
-    height: 20px !important;
-    display: inline-block;
-    margin-left: 10px;
+mat-card {
+    width: 350px;
 }
- 
-.mat-spinner svg{
-    width: 20px !important;
-    height: 20px !important;
+
+mat-form-field {
+    width: 80%;
 }
