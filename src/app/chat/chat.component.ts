@@ -6,6 +6,8 @@ import { Router} from '@angular/router'
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+  selectedChat?: string
+  text?: string
 
   constructor() { }
 
