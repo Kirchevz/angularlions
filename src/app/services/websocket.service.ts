@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket'
-import { GroupChatMsg } from './models/GroupChatMsg';
-import { loginMsg } from './models/loginMsg';
+import { GroupChatMsg } from '../models/GroupChatMsg';
+import { loginMsg } from '../models/loginMsg';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class ConnectionService {
+export class WebsocketService {
   private _subject?: WebSocketSubject<unknown>
   private _loginSubject: Subject<loginMsg>
   private groupChatMsgSubject: Subject<GroupChatMsg>
