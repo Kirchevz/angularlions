@@ -22,7 +22,8 @@ export class WebsocketService {
     if(!this._subject) {
       this._subject = webSocket("ws://localhost:3000/chat")
 
-      this._subject.subscribe(this.subjectHandler)
+      // TODO: create error subject to handle errors other places in the application
+      this._subject.subscribe({next: this.subjectHandler, error: error => console.log(error)})
     }
 
     return this._subject
