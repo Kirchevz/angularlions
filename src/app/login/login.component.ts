@@ -25,8 +25,13 @@ export class LoginComponent implements OnInit {
   ngOnInit() { }
 
   onLogin() {
-    this.loginSubscription = this.connectionService.login(this.username, this.password)
-        .subscribe(this.loginLogic)
+    try {
+      this.loginSubscription = this.connectionService.login(this.username, this.password)
+        .subscribe({next: this.loginLogic, error: error => console.log("error")})
+    } catch (error) {
+      alert("wrong credentials")
+    }
+    
   }
 
   private loginLogic = (loginStanza: loginMsg) => {
@@ -35,6 +40,7 @@ export class LoginComponent implements OnInit {
     switch (msg) {
       case loginType.CONNECTED:
         this.router.navigate(["/chat"])
+        this.loginSubscription?.unsubscribe()
         break;
       case loginType.AUTHFAIL:
         alert("Wrong ejabberd credentials")

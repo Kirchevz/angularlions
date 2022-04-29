@@ -33,9 +33,10 @@ export class ConnectionService {
         // TODO: change to token ones c# api works
         {username: user.chatInfo.jid, password: user.chatInfo.password}
         )
+        return this.websocketService.loginSubject.asObservable()
     }
 
-    return this.websocketService.loginSubject.asObservable()
+    throw new Error("login failed")
   }
 
 }
