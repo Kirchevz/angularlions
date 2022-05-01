@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WebsocketService } from '../services/websocket.service';
-import { loginMsg } from '../models/loginMsg';
+import { LoginMsg } from '../models/LoginMsg';
 import { UserDataService } from '../services/userData.service';
-import { ConnectionService } from '../services/connection.service';
 import { Subscription } from 'rxjs';
 import { loginType } from '../models/loginEnum';
 
@@ -19,38 +18,43 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private connectionService: ConnectionService
-    ) { }
+    private userDataService: UserDataService,
+
+  ) {}
 
   ngOnInit() { }
 
   onLogin() {
-    try {
-      this.loginSubscription = this.connectionService.login(this.username, this.password)
-        .subscribe({next: this.loginLogic, error: error => console.log("error")})
-    } catch (error) {
-      alert("wrong credentials")
-    }
-    
-  }
 
-  private loginLogic = (loginStanza: loginMsg) => {
-    const msg = loginStanza.connectionType
-
-    switch (msg) {
-      case loginType.CONNECTED:
-        this.router.navigate(["/chat"])
-        this.loginSubscription?.unsubscribe()
-        break;
-      case loginType.AUTHFAIL:
-        alert("Wrong ejabberd credentials")
-        break;
-      case loginType.CONFAIL:
-        alert('Ejabberd server error')
-        break;
-      default:
-        break;
+    if (this.username && this.password) {
+      this.loginSubscription = this.userDataService.login(this.username, this.password).subscribe({
+        next: () => {
+          this.router.navigate(["/chat"])
+          this.loginSubscription?.unsubscribe()
+        }, error: () => {
+          alert("wrong credentials")
+        }
+      })
     }
   }
+
+  // private loginLogic = (loginStanza: loginMsg) => {
+  //   const msgType = loginStanza.connectionType
+
+  //   switch (msgType) {
+  //     case loginType.CONNECTED:
+  //       this.router.navigate(["/chat"])
+  //       this.loginSubscription?.unsubscribe()
+  //       break;
+  //     case loginType.AUTHFAIL:
+  //       alert("Wrong ejabberd credentials")
+  //       break;
+  //     case loginType.CONFAIL:
+  //       alert('Ejabberd server error')
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
 }

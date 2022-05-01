@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router} from '@angular/router'
+import { WebsocketService } from '../services/websocket.service';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -9,9 +10,11 @@ export class ChatComponent implements OnInit {
   selectedChat?: string
   text?: string
 
-  constructor() { }
+  constructor(private websocketService: WebsocketService) { 
+  }
 
   ngOnInit(): void {
+    this.websocketService.loginObservable?.subscribe(msg => console.log(msg))
   }
 
 }

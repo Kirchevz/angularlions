@@ -1,42 +1,33 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { loginMsg } from '../models/loginMsg';
-import { WebUserWithExtraInfo } from '../models/WebUserWithExtraInfo';
-import { WebsocketService } from '../services/websocket.service';
-import { UserDataService } from './userData.service';
+// import { Injectable } from '@angular/core';
+// import { Observable } from 'rxjs';
+// import { LoginMsg } from '../models/LoginMsg';
+// import { WebUserWithExtraInfo } from '../models/WebUserWithExtraInfo';
+// import { WebsocketService } from '../services/websocket.service';
+// import { UserDataService } from './userData.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ConnectionService {
-  private _currentUser?: WebUserWithExtraInfo | undefined;
-
-  constructor(
-    private websocketService: WebsocketService,
-    private userDataService: UserDataService
-    ) { }
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class ConnectionService {
   
-  // NOTE: might store the user in localstore so it retrieved after page reload
-  public get currentUser(): WebUserWithExtraInfo | undefined {
-    return this._currentUser;
-  }
+//   constructor(
+//     private websocketService: WebsocketService,
+//     private userDataService: UserDataService
+//   ) { }
 
-  public login(username?: string, password?: string): Observable<loginMsg> {
-    const user = this.userDataService.getUser(username, password)
+//   public login(username: string, password: string): Observable<LoginMsg> {
+//     this.userDataService.login(username, password).subscribe({
+//       next: this.successfulLogin, error: () => { throw new Error('Could not login') }
+//     })
 
-    if(user) {
-      this._currentUser = user
+//     return this.websocketService.loginSubject.asObservable()
+//   }
 
-      this.websocketService.subject.next(
-        // send the username and password over the connection
-        // TODO: change to token ones c# api works
-        {username: user.chatInfo.jid, password: user.chatInfo.password}
-        )
-        return this.websocketService.loginSubject.asObservable()
-    }
-
-    throw new Error("login failed")
-  }
-
-}
+//   private successfulLogin = (user: WebUserWithExtraInfo) => {
+//     this.websocketService.subject.next(
+//       // NOTE: send the username and password over the connection
+//       // TODO: change to token ones c# api works
+//       { username: user.chatInfo.jid, password: user.chatInfo.password }
+//     )
+//   }
+// }

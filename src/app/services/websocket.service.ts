@@ -1,50 +1,51 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { filter, Observable, Subject } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket'
 import { GroupChatMsg } from '../models/GroupChatMsg';
-import { loginMsg } from '../models/loginMsg';
+import { LoginMsg } from '../models/LoginMsg';
+import { WebUserWithExtraInfo } from '../models/WebUserWithExtraInfo';
+import { UserDataService } from './userData.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class WebsocketService {
-  private _subject?: WebSocketSubject<unknown>
-  private _loginSubject: Subject<loginMsg>
-  private groupChatMsgSubject: Subject<GroupChatMsg>
+  private _subject: WebSocketSubject<any> = webSocket("ws://localhost:3000/chat")
+  private _loginObservable: Observable<LoginMsg>
+  private _groupChatMsgObservable: Observable<GroupChatMsg>
 
-  constructor() { 
-    this._loginSubject = new Subject<loginMsg>(),
-    this.groupChatMsgSubject = new Subject<GroupChatMsg>()
+  constructor(private userDataService: UserDataService) {
+    userDataService.userObservable.subscribe({
+      next: user => this.login(user),
+      error: () => { alert('no valid xmpp credentials given') }
+    })
+
+    this._loginObservable = this._loginObservable = this._subject.pipe(
+      filter(msg => msg.messageType == 'login')
+    )
+
+    this._groupChatMsgObservable = this._subject.pipe(
+      filter(msg => msg.messageType == 'groupChatMessage')
+    )
+  }
+
+  private login(user: WebUserWithExtraInfo | null) {
+    if (user) {
+      this._subject.next({ username: user.chatInfo.jid, password: user.chatInfo.password })
+    }
   }
 
   public get subject() {
-    if(!this._subject) {
-      this._subject = webSocket("ws://localhost:3000/chat")
-
-      // TODO: create error subject to handle errors other places in the application
-      this._subject.subscribe({next: this.subjectHandler, error: error => console.log(error)})
-    }
-
     return this._subject
   }
 
-  
-  public get loginSubject() : Subject<loginMsg> {
-    return this._loginSubject
+  public get loginObservable(): Observable<LoginMsg> {
+    return this._loginObservable
   }
-  
 
-  private subjectHandler = (stanza: any) => {
-    switch (stanza.messageType) {
-      case 'login':
-        this._loginSubject.next(<loginMsg> stanza)
-        break;
-      case 'groupChatMessage':
-        this.groupChatMsgSubject.next(<GroupChatMsg> stanza)
-        break;
-      default:
-        break;
-    }
+  public get groupChatMsgObservable(): Observable<GroupChatMsg> {
+    return this._groupChatMsgObservable
   }
+
 }
