@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router} from '@angular/router'
+import { WebUserWithExtraInfo } from '../models/WebUserWithExtraInfo';
+import { UserDataService } from '../services/userData.service';
 import { WebsocketService } from '../services/websocket.service';
 @Component({
   selector: 'app-chat',
@@ -9,8 +11,13 @@ import { WebsocketService } from '../services/websocket.service';
 export class ChatComponent implements OnInit {
   selectedChat?: string
   text?: string
+  user?: WebUserWithExtraInfo
 
-  constructor(private websocketService: WebsocketService) { 
+  constructor(private websocketService: WebsocketService,
+              private userDataService: UserDataService) { 
+                userDataService.userObservable.subscribe((user) => {
+                  if(user) this.user = user
+                })
   }
 
   ngOnInit(): void {
