@@ -20,8 +20,10 @@
 }
  
 .conversation-header h2, .conversation-header p {
-    align-items: center;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
 }
  
 .text-center {
@@ -54,6 +56,7 @@
     overflow: scroll;
 }
 .conversation-input {
+    
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -74,10 +77,28 @@ section .mat-list .mat-list-avatar{
 }
  
 .full-width {
-    width: 100%;
-    padding: 5px 5px;
+    width: 90%;
+    padding: 5px 13px;
 }
  
 .full-width .mat-icon {
     cursor: pointer;
+}
+
+.non-overflow {
+    overflow: hidden;
+}
+
+.center-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-element-selector {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 5px;
 }
