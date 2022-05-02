@@ -14,14 +14,14 @@ export class ChatComponent implements OnInit {
   user?: WebUserWithExtraInfo
 
   constructor(private websocketService: WebsocketService,
-              private userDataService: UserDataService) { 
-                userDataService.userObservable.subscribe((user) => {
-                  if(user) this.user = user
-                })
-  }
+              private userDataService: UserDataService) { }
 
   ngOnInit(): void {
     this.websocketService.loginObservable?.subscribe(msg => console.log(msg))
+
+    this.userDataService.userObservable.subscribe((user) => {
+      if(user) this.user = user
+    })
   }
 
 }
