@@ -14,7 +14,7 @@
             <mat-list-item *ngFor="let group of groups" (click)="selectGroup(group.id)">
               <p>{{group.name}}</p>
             </mat-list-item>
-
+          
           </mat-list>
 
     </mat-card>
@@ -51,15 +51,18 @@
       <h2>{{selectedChannel?.name}}</h2>
     </div>
     <mat-divider></mat-divider>
-    <mat-list dense class="conversation-history mat-typography">
-      <mat-list-item *ngFor="let msg of channelMessages">
-        <p>{{getMemberNameFromJid(msg.sender)}}: {{msg.message}}</p>
-      </mat-list-item>
-    </mat-list>
+    <div #channelHistory class="conversation-history mat-typography message-list">
+      <div *ngFor="let msg of channelMessages" class="message-container" [class.own-message]="isOwnMessage(msg)">
+        <div class="conversation-msg">
+          <p class="message-header" *ngIf="!isOwnMessage(msg)">{{getMemberNameFromJid(msg.sender)}}</p>
+          <p class="message-body">{{msg.message}}</p>
+        </div>
+      </div>
+    </div>
     <div class="conversation-input">
       <mat-divider></mat-divider>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Start chatting..." name="text" [(ngModel)]="text">
+        <input matInput placeholder="Start chatting..." name="text" [(ngModel)]="text" (keydown.enter)="sendGroupChatMsg(text)">
         <mat-icon matSuffix (click)="sendGroupChatMsg(text)">send</mat-icon>
         <!-- <mat-icon matSuffix (click)="">send</mat-icon> -->
       </mat-form-field>
@@ -69,7 +72,12 @@
   <mat-sidenav position="end" mode="side" opened *ngIf="selectedGroup">
     <mat-card class="non-overflow">
       <mat-list class="members">
-        ...
+        <h2>Members:</h2>
+        <mat-divider></mat-divider>
+        <mat-list-item *ngFor="let member of selectedGroup.members" class="members-item">
+          {{member.contact.name}}
+          <span class="dot" [class.online]="isMemberOnline(member.chatInfo.jid)"></span>
+        </mat-list-item>
       </mat-list>
     </mat-card>
   </mat-sidenav>
