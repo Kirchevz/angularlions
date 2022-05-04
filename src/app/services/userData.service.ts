@@ -8,7 +8,7 @@ import { WebUserWithExtraInfo } from '../models/WebUserWithExtraInfo';
 })
 export class UserDataService {
 
-  private userSubject = new BehaviorSubject<WebUserWithExtraInfo | null>(null);
+  private userSubject = new BehaviorSubject<WebUserWithExtraInfo | null>(null)
 
   userObservable: Observable<WebUserWithExtraInfo | null> = this.userSubject.asObservable()
 

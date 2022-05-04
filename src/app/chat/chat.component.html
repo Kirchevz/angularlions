@@ -1,5 +1,5 @@
 <mat-sidenav-container class="container">
-  <mat-sidenav mode="side" opened >
+  <mat-sidenav mode="side" opened *ngIf="!selectedGroup">
     <mat-card class="non-overflow">
 
           <div class="chat-element-selector">
@@ -46,19 +46,21 @@
   <section class="empty-conversation" *ngIf="!selectedChannel">
     <h1 class="mat-display-1">Select a group then a channel from the left to start chatting</h1>
   </section>
-  <section *ngIf="selectedGroup">
+  <section *ngIf="selectedChannel">
     <div class="mat-typography conversation-header">
       <h2>{{selectedChannel?.name}}</h2>
     </div>
     <mat-divider></mat-divider>
     <mat-list dense class="conversation-history mat-typography">
-      ...
+      <mat-list-item *ngFor="let msg of channelMessages">
+        <p>{{getMemberNameFromJid(msg.sender)}}: {{msg.message}}</p>
+      </mat-list-item>
     </mat-list>
     <div class="conversation-input">
       <mat-divider></mat-divider>
       <mat-form-field class="full-width">
         <input matInput placeholder="Start chatting..." name="text" [(ngModel)]="text">
-        <mat-icon matSuffix>send</mat-icon>
+        <mat-icon matSuffix (click)="sendGroupChatMsg(text)">send</mat-icon>
         <!-- <mat-icon matSuffix (click)="">send</mat-icon> -->
       </mat-form-field>
     </div>

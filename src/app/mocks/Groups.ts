@@ -3,8 +3,8 @@ import { Group } from "../models/Group";
 export const GROUPS: Group[] = [
     {
         id: 1, name: "FirstGroup", jid: "nadeemo.FirstEvarGroup@conference.localhost", department: 1, channels: [
-            { id:1, name: "general", jid: "nadeemo.FirstEvarGroup.general.localhost" },
-            { id:2, name: "support", jid: "nadeemo.FirstEvarGroup.support.localhost" }
+            { id:1, name: "general", jid: "nadeemo.FirstEvarGroup.general@conference.localhost" },
+            { id:2, name: "support", jid: "nadeemo.FirstEvarGroup.support@conference.localhost" }
         ], 
         members: [
             {
@@ -24,7 +24,7 @@ export const GROUPS: Group[] = [
     },
     {
         id: 2, name: "SecondGroup", jid: "nadeemo.Secundo@conference.localhost", department: 1, channels: [
-            { id:2, name: "general", jid: "nadeemo.Secundo.general.localhost"}
+            { id:2, name: "general", jid: "nadeemo.Secundo.general@conference.localhost"}
         ],  members: [
             {
                 id: 1,

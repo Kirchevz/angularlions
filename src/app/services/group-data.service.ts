@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { GROUPS } from '../mocks/Groups';
 import { Group } from '../models/Group';
 import { WebUserWithExtraInfo } from '../models/WebUserWithExtraInfo';
@@ -9,6 +9,10 @@ import { UserDataService } from './userData.service';
   providedIn: 'root'
 })
 export class GroupDataService {
+
+  private groupsSubject = new BehaviorSubject<Group[] | null>(null)
+
+  groupsObservable: Observable<Group[] | null> = this.groupsSubject.asObservable()
 
   constructor() { }
 
@@ -26,6 +30,10 @@ export class GroupDataService {
           return error;
         })
       }
-    })
+    }).pipe(
+      tap(groups => {
+        this.groupsSubject.next(groups)
+      }),
+    )
   }
 }

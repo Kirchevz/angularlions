@@ -4,7 +4,7 @@ import { WebsocketService } from '../services/websocket.service';
 import { LoginMsg } from '../models/LoginMsg';
 import { UserDataService } from '../services/userData.service';
 import { Subscription } from 'rxjs';
-import { loginType } from '../models/loginEnum';
+import { LoginEnum } from '../models/loginEnum';
 
 @Component({
   selector: 'app-login',
