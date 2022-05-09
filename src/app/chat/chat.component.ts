@@ -1,5 +1,5 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { BehaviorSubject, filter, scan, Subscription, tap, toArray } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Group } from '../models/Group';
 import { GroupChannel } from '../models/GroupChannel';
 import { GroupChatMsg } from '../models/GroupChatMsg';
@@ -91,7 +91,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.websocketService.presenceObservable.subscribe(msg => {
       console.log(msg)
       
-
       if(msg.item?.jid) {
         if(msg.type == "") {
           this.groupUsersOnlineStatus.set(msg.item.jid, 'online')
@@ -106,6 +105,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     })
   }
 
+  // Selection section:
   selectGroup(groupId: number) {
     this.selectedGroup = this.groups?.find(group => group.id == groupId)
   }
@@ -124,6 +124,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.selectedChannel = undefined
   }
 
+  // Group message method
   sendGroupChatMsg(msgText: string | undefined) {
     if (this.selectedChannel && msgText) {
       this.websocketService.sendGroupChatMsg(msgText, this.selectedChannel?.jid)
@@ -131,12 +132,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  getChannelMessages() {
-    const groupMsg = this.groupChatMessages.filter(msg => msg.group == this.selectedChannel?.jid)
-    console.log(this.groupChatMessages)
-    return groupMsg
-  }
-
+  // User data section:
   getMemberNameFromJid(jid: string) {
 
     return this.selectedGroup?.members.find(
@@ -159,9 +155,4 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   isOwnMessage(msg: GroupChatMsg) {
     return msg.sender == this.user?.chatInfo.jid
   }
-
-  loadMessages() {
-    return this.channelMessages
-  }
-
 }

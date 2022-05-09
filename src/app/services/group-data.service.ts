@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable, shareReplay, tap, throwError } from 'rxjs'
 import { GROUPS } from '../mocks/Groups';
 import { Group } from '../models/Group';
 import { WebUserWithExtraInfo } from '../models/WebUserWithExtraInfo';
-import { UserDataService } from './userData.service';
 
 @Injectable({
   providedIn: 'root'

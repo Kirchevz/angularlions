@@ -133,6 +133,7 @@ section .mat-list .mat-list-avatar{
 }
 
 .message-body {
+    width: fit-content;
     padding: 3px 14px;
     text-align: center;
     background-color: #136aed;
