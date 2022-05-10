@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { group } from 'console';
 import { BehaviorSubject, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { GROUPS } from '../mocks/Groups';
 import { Group } from '../models/Group';
@@ -15,7 +16,7 @@ export class GroupDataService {
 
   constructor() { }
 
-  getGroup(user: WebUserWithExtraInfo | undefined) {
+  getGroup(user: WebUserWithExtraInfo | undefined) : Observable<Group[]> {
     const groups = GROUPS.filter(
       group => group.members.find(u => u.id == user?.id)
       )
