@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { group } from 'console';
 import { BehaviorSubject, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { GROUPS } from '../mocks/Groups';
 import { Group } from '../models/Group';
