@@ -24,6 +24,7 @@ import {ChatComponent } from './chat/chat.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {HttpClientModule} from'@angular/common/http';
+import { AuthGuardGuard } from './guards/auth-guard.guard';
 
 
 @NgModule({
@@ -57,7 +58,7 @@ import {HttpClientModule} from'@angular/common/http';
   AppRoutingModule,
   BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [AuthGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

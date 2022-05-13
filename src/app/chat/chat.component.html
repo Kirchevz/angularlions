@@ -1,44 +1,83 @@
 <mat-sidenav-container class="container">
-  <mat-sidenav mode="side" opened>
-    <mat-card>
-      <mat-tab-group>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon matListIcon>forum</mat-icon>
-          </ng-template>
+  <mat-sidenav mode="side" opened *ngIf="!selectedGroup">
+    <mat-card class="non-overflow">
+
+          <div class="chat-element-selector">
+            <h2>Groups</h2>
+            <mat-icon>forum</mat-icon>
+          </div>
+
+          <mat-divider></mat-divider>
+          
           <mat-list class="conversations">
-              ...
+
+            <mat-list-item *ngFor="let group of groups" (click)="selectGroup(group.id)">
+              <p>{{group.name}}</p>
+            </mat-list-item>
+          
           </mat-list>
-        </mat-tab>
-      </mat-tab-group>
+
     </mat-card>
   </mat-sidenav>
-  
-  <section class="empty-conversation" *ngIf="!selectedChat">
-    <h1 class="mat-display-1">Select a conversation from the left to start chatting</h1>
+
+  <mat-sidenav mode="side" opened *ngIf="selectedGroup">
+    <mat-card class="non-overflow">
+
+      <div class="chat-element-selector">
+        <h2>{{selectedGroup.name}}</h2>
+        <button mat-stroked-button color="primary" (click)="removeSelected()">
+          Back to Groups
+        </button>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <mat-list class="conversations">
+
+        <mat-list-item *ngFor="let channel of selectedGroup.channels" (click)="selectChannel(channel.id)">
+          <p>{{channel.name}}</p>
+        </mat-list-item>
+
+      </mat-list>
+
+    </mat-card>
+  </mat-sidenav>
+
+  <section class="empty-conversation" *ngIf="!selectedChannel">
+    <h1 class="mat-display-1">Select a group then a channel from the left to start chatting</h1>
   </section>
-  <section *ngIf="selectedChat">
+  <section *ngIf="selectedChannel">
     <div class="mat-typography conversation-header">
-        ...
+      <h2>{{selectedChannel?.name}}</h2>
     </div>
     <mat-divider></mat-divider>
-    <mat-list dense class="conversation-history mat-typography">
-      ...
-    </mat-list>
+    <div #channelHistory class="conversation-history mat-typography message-list">
+      <div *ngFor="let msg of channelMessages" class="message-container" [class.own-message]="isOwnMessage(msg)">
+        <div class="conversation-msg">
+          <p class="message-header" *ngIf="!isOwnMessage(msg)">{{getMemberNameFromJid(msg.sender)}}</p>
+          <p class="message-body">{{msg.message}}</p>
+        </div>
+      </div>
+    </div>
     <div class="conversation-input">
       <mat-divider></mat-divider>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Start chatting..." name="text" [(ngModel)]="text">
-        <mat-icon matSuffix>send</mat-icon>
+        <input matInput placeholder="Start chatting..." name="text" [(ngModel)]="text" (keydown.enter)="sendGroupChatMsg(text)">
+        <mat-icon matSuffix (click)="sendGroupChatMsg(text)">send</mat-icon>
         <!-- <mat-icon matSuffix (click)="">send</mat-icon> -->
       </mat-form-field>
     </div>
   </section>
 
-  <mat-sidenav position="end" mode="side" opened *ngIf="selectedChat">
-    <mat-card>
+  <mat-sidenav position="end" mode="side" opened *ngIf="selectedGroup">
+    <mat-card class="non-overflow">
       <mat-list class="members">
-          ...
+        <h2>Members:</h2>
+        <mat-divider></mat-divider>
+        <mat-list-item *ngFor="let member of selectedGroup.members" class="members-item">
+          {{member.contact.name}}
+          <span class="dot" [class.online]="isMemberOnline(member.chatInfo.jid)"></span>
+        </mat-list-item>
       </mat-list>
     </mat-card>
   </mat-sidenav>
