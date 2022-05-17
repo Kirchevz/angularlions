@@ -10,7 +10,6 @@ import { UserDataService } from '../services/userData.service';
   styleUrls: ['./join-group.component.css']
 })
 export class JoinGroupComponent implements OnInit {
-  private currUser?: WebUserWithExtraInfo | undefined
   departmentGroups?: Group[]
 
   constructor(userDataService: UserDataService,
