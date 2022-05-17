@@ -82,7 +82,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             msgs => {
               if(msgs)
               // NOTE: Problem every jid is lowercase when returned from ejabberd
-              // NOTE: RXJS IS A MASSIVE PAIN
               // NOTE: Changes done to the ejabberd configuration to persist data
               this.channelMessages = msgs?.filter(msg => msg.group == channel.jid.toLowerCase())
             }
