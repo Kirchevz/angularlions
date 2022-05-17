@@ -12,7 +12,7 @@ export class GroupDataService {
   private groupsSubject = new BehaviorSubject<Group[] | null>(null)
 
   groupsObservable: Observable<Group[] | null> = this.groupsSubject.asObservable()
-
+  
   constructor() { }
 
   getGroup(user: WebUserWithExtraInfo | undefined) : Observable<Group[]> {
