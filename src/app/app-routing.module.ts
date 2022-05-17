@@ -15,11 +15,6 @@ const routes: Routes = [
         path: 'chat',
         component: ChatComponent,
         canActivate: [AuthGuardGuard],
-    },
-    {
-        path: 'groups',
-        component: JoinGroupComponent,
-        canActivate: [AuthGuardGuard]
     }
 ];
 

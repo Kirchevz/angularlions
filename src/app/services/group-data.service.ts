@@ -35,4 +35,21 @@ export class GroupDataService {
       }),
     )
   }
+
+  getDepartmentGroups(user: WebUserWithExtraInfo | undefined) {
+    const groups = GROUPS.filter(
+      group => group.departmentId == user?.tenantWebInfo.DepartmentId
+      )
+      
+    return new Observable<Group[]>(subscribe => {
+      if(groups) subscribe.next(groups)
+      else {
+        throw throwError(() => {
+          const error: any = new Error(`No groups was found`);
+          error.timestamp = Date.now();
+          return error;
+        })
+      }
+    })
+  }
 }

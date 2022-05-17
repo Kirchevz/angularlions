@@ -7,6 +7,8 @@ import { WebUserWithExtraInfo } from '../models/WebUserWithExtraInfo';
 import { GroupDataService } from '../services/group-data.service';
 import { UserDataService } from '../services/userData.service';
 import { WebsocketService } from '../services/websocket.service';
+import {MatDialog} from '@angular/material/dialog';
+import { JoinGroupComponent } from '../join-group/join-group.component';
 
 @Component({
   selector: 'app-chat',
@@ -36,7 +38,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   constructor(private websocketService: WebsocketService,
     private userDataService: UserDataService,
-    private groupDataService: GroupDataService) { }
+    private groupDataService: GroupDataService,
+    public dialog: MatDialog) { }
   
   
   ngAfterViewChecked(): void {
@@ -154,5 +157,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   isOwnMessage(msg: GroupChatMsg) {
     return msg.sender == this.user?.chatInfo.jid
+  }
+
+  // Dialog section
+  openDialog() {
+    const dialogRef = this.dialog.open(JoinGroupComponent);
+
   }
 }
