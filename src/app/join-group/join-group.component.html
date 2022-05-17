@@ -1,1 +1,8 @@
-<p>join-group works!</p>
+<h2>List of available groups</h2>
+<mat-list>
+    <div class="group-item" *ngFor="let group of departmentGroups">
+        {{group.name}}
+        <button class="join-button" mat-stroked-button color="primary">Join</button>
+    </div>
+</mat-list>
+
