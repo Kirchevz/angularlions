@@ -10,19 +10,27 @@ import { UserDataService } from '../services/userData.service';
   styleUrls: ['./join-group.component.css']
 })
 export class JoinGroupComponent implements OnInit {
+  private currUser?: WebUserWithExtraInfo | null
   departmentGroups?: Group[]
 
   constructor(userDataService: UserDataService,
-    groupDataService: GroupDataService) { 
+    private groupDataService: GroupDataService) { 
       userDataService.userObservable.subscribe(user => {
-        if(user)
+        if(user) {
+        this.currUser = user
         groupDataService.getDepartmentGroups(user).subscribe(groups =>
           this.departmentGroups = groups)
+        }
       })
       
     }
 
   ngOnInit(): void {
+  }
+
+  joinNewGroup(group: Group) {
+    if (this.currUser)
+    this.groupDataService.joinNewGroup(this.currUser, group)
   }
 
 }

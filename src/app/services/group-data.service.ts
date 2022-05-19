@@ -52,4 +52,13 @@ export class GroupDataService {
       }
     })
   }
+
+  joinNewGroup(user: WebUserWithExtraInfo | undefined, group: Group | undefined) {
+    const newGroup = GROUPS.find(g => g.id == group?.id)
+    if(user){
+      // Check if user already member
+      if (!newGroup?.members.find(u => u.id == user.id))
+      newGroup?.members.push(user)
+  }
+  }
 }

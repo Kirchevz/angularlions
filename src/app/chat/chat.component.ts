@@ -161,6 +161,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   // Dialog section
   openDialog() {
     const dialogRef = this.dialog.open(JoinGroupComponent);
-
+    dialogRef.afterClosed().subscribe(result => {
+      if(result)
+      this.groupDataService.getGroup(this.user).subscribe(groups =>{
+        this.groups = groups
+       })
+    })
+    // after dialog has been closed update the group list
   }
 }

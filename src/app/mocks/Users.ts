@@ -24,4 +24,11 @@ export const USERS: WebUserWithExtraInfo[] = [
         chatInfo: {jid: "user3@localhost", password: "passw0rd"},
         tenantWebInfo: {CompanyId: 1, DepartmentId: 2, LeaseId: 1}
     },
+    {
+        id: 4,
+        webUser: {username: "casperino", password: "passw0rd", isResident: true, isLoginPermitted: true, isChatActivate: true, hasResidentWebAccess: true, hasBoardWebAccess: false},
+        contact: {name: "casper s", email: "some1t@mail.com", birthday: new Date("1992-02-13")},
+        chatInfo: {jid: "user4@localhost", password: "passw0rd"},
+        tenantWebInfo: {CompanyId: 1, DepartmentId: 1, LeaseId: 6}
+    },
 ]
