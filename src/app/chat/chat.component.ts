@@ -66,7 +66,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.userDataService.userObservable.subscribe((user) => {
       if (user) {
         this.user = user
-        this.groupDataService.getGroup(this.user).subscribe(groups =>{
+        this.groupDataService.getUserGroups(this.user).subscribe(groups =>{
            this.groups = groups
           })
       }
@@ -163,7 +163,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     const dialogRef = this.dialog.open(JoinGroupComponent);
     dialogRef.afterClosed().subscribe(result => {
       if(result)
-      this.groupDataService.getGroup(this.user).subscribe(groups =>{
+      this.groupDataService.getUserGroups(this.user).subscribe(groups =>{
         this.groups = groups
        })
     })
