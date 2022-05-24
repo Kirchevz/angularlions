@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { Group } from '../models/Group';
 import { WebUserWithExtraInfo } from '../models/WebUserWithExtraInfo';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupDataService {
 
+  
   private groupsSubject = new BehaviorSubject<Group[] | null>(null)
 
   groupsObservable: Observable<Group[] | null> = this.groupsSubject.asObservable()
@@ -59,7 +60,14 @@ export class GroupDataService {
   }
 
   joinNewGroup(user: WebUserWithExtraInfo | undefined, group: Group | undefined) {
-    return this.http.put(`https://localhost:7102/api/Group/Department/${user?.tenantWebInfo.department.id}`, {userId: user?.id, groupId:group?.id})
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    };
+
+    
+    return this.http.put(`https://localhost:7102/api/Group/Join`, {userId: user?.id, groupId:group?.id}, httpOptions)
   //   const newGroup = GROUPS.find(g => g.id == group?.id)
   //   if(user){
   //     // Check if user already member

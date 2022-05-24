@@ -30,7 +30,7 @@ export class JoinGroupComponent implements OnInit {
 
   joinNewGroup(group: Group) {
     if (this.currUser)
-    this.groupDataService.joinNewGroup(this.currUser, group)
+    this.groupDataService.joinNewGroup(this.currUser, group).subscribe()
   }
 
 }
