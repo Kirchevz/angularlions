@@ -1,5 +1,9 @@
+import { Company } from "./Company";
+import { Department } from "./Department";
+import { Lease } from "./Lease";
+
 export interface TenantWebInfo {
-    CompanyId: number,
-    DepartmentId: number,
-    LeaseId: number,
+    company: Company,
+    department: Department,
+    lease: Lease,
 }
