@@ -15,7 +15,7 @@ export class GroupDataService {
   
   constructor() { }
 
-  getGroup(user: WebUserWithExtraInfo | undefined) : Observable<Group[]> {
+  getUserGroups(user: WebUserWithExtraInfo | undefined) : Observable<Group[]> {
     const groups = GROUPS.filter(
       group => group.members.find(u => u.id == user?.id)
       )
