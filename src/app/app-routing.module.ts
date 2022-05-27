@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { ChatComponent } from './chat/chat.component';
 import { AuthGuardGuard } from './guards/auth-guard.guard';
+import { JoinGroupComponent } from './join-group/join-group.component';
 
 
 const routes: Routes = [

@@ -25,13 +25,15 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {HttpClientModule} from'@angular/common/http';
 import { AuthGuardGuard } from './guards/auth-guard.guard';
+import { JoinGroupComponent } from './join-group/join-group.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ChatComponent
+    ChatComponent,
+    JoinGroupComponent
   ],
   imports: [
   HttpClientModule,

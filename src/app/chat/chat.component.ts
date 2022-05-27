@@ -7,6 +7,8 @@ import { WebUserWithExtraInfo } from '../models/WebUserWithExtraInfo';
 import { GroupDataService } from '../services/group-data.service';
 import { UserDataService } from '../services/userData.service';
 import { WebsocketService } from '../services/websocket.service';
+import {MatDialog} from '@angular/material/dialog';
+import { JoinGroupComponent } from '../join-group/join-group.component';
 
 @Component({
   selector: 'app-chat',
@@ -36,7 +38,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   constructor(private websocketService: WebsocketService,
     private userDataService: UserDataService,
-    private groupDataService: GroupDataService) { }
+    private groupDataService: GroupDataService,
+    public dialog: MatDialog) { }
   
   
   ngAfterViewChecked(): void {
@@ -63,7 +66,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.userDataService.userObservable.subscribe((user) => {
       if (user) {
         this.user = user
-        this.groupDataService.getGroup(this.user).subscribe(groups =>{
+        this.groupDataService.getUserGroups(this.user).subscribe(groups =>{
            this.groups = groups
           })
       }
@@ -79,7 +82,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             msgs => {
               if(msgs)
               // NOTE: Problem every jid is lowercase when returned from ejabberd
-              // NOTE: RXJS IS A MASSIVE PAIN
               // NOTE: Changes done to the ejabberd configuration to persist data
               this.channelMessages = msgs?.filter(msg => msg.group == channel.jid.toLowerCase())
             }
@@ -154,5 +156,17 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   isOwnMessage(msg: GroupChatMsg) {
     return msg.sender == this.user?.chatInfo.jid
+  }
+
+  // Dialog section
+  openDialog() {
+    const dialogRef = this.dialog.open(JoinGroupComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result)
+      this.groupDataService.getUserGroups(this.user).subscribe(groups =>{
+        this.groups = groups
+       })
+    })
+    // after dialog has been closed update the group list
   }
 }

@@ -5,7 +5,7 @@ export interface Group {
     id: number,
     name: string,
     jid: string,
-    department: number,
+    departmentId: number,
     channels: GroupChannel[]
     members: WebUserWithExtraInfo[]
 }

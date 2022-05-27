@@ -1,5 +1,6 @@
 import { ChatInfo } from "./ChatInfo";
 import { Contact } from "./Contact";
+import { TenantWebInfo } from "./TenantWebInfo";
 import { WebUser } from "./WebUser";
 
 export interface WebUserWithExtraInfo {
@@ -7,4 +8,5 @@ export interface WebUserWithExtraInfo {
     webUser: WebUser,
     contact: Contact,
     chatInfo: ChatInfo,
+    tenantWebInfo: TenantWebInfo,
 }

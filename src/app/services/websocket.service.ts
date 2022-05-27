@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { filter, map, Observable, shareReplay, Subject, throwError } from 'rxjs';
+import { filter, map, Observable, shareReplay, Subject, tap, throwError } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket'
 import { Group } from '../models/Group';
 import { GroupChatMsg } from '../models/GroupChatMsg';
@@ -32,6 +32,7 @@ export class WebsocketService {
 
     this._loginObservable = this._loginObservable = this._subject.pipe(
       filter(msg => msg.messageType == 'login'),
+      tap(msg => console.log(msg)),
       shareReplay()
     )
 
